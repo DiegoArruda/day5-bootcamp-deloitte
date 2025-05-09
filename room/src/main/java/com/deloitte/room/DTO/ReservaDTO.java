@@ -1,7 +1,4 @@
 package com.deloitte.room.DTO;
-
-
-
 import lombok.Data;
 
 import java.time.LocalDateTime;

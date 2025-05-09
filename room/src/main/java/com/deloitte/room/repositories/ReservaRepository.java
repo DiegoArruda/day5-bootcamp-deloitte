@@ -7,9 +7,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ReservaRepository extends JpaRepository<Reserva,Long> {
-    List<Reserva> findBySalaIdAndInicioReservaLessThanEqualAndFimReservaGreaterThanEqual(Long salaId, LocalDateTime fim, LocalDateTime inicio);
+    List<Reserva> findBySalaIDAndInicioReservaLessThanEqualAndFimReservaGreaterThanEqual(Long salaId, LocalDateTime fim, LocalDateTime inicio);
 
     List<Reserva> findByInicioReservaAfterOrderByInicioReservaAsc(LocalDateTime dataHora);
 
-    List<Reserva> findBydSalaIdOrderByInicioReservaAsc(Long id);
+    List<Reserva> findBySalaIDOrderByInicioReservaAsc(Long id);
 }
