@@ -29,7 +29,7 @@ public class ReservaService {
         }
 
         List<Reserva> conflitos = reservaRepository
-                .findBySalaIdAndInicioLessThanEqualAndFimGreaterThanEqual(dto.getSalaId(), dto.getFimReserva(),dto.getInicioReserva());
+                .findBySalaIdAndInicioReservaLessThanEqualAndFimReservaGreaterThanEqual(dto.getSalaId(), dto.getFimReserva(),dto.getInicioReserva());
 
         if (!conflitos.isEmpty()){
             throw new IllegalArgumentException("Já existe uma reserva nesse horário");
@@ -53,11 +53,11 @@ public class ReservaService {
     }
 
     public List<Reserva> listarFuturas(){
-        return reservaRepository.findByInicioAfterOrderByInicioAsc(LocalDateTime.now());
+        return reservaRepository.findByInicioReservaAfterOrderByInicioReservaAsc(LocalDateTime.now());
     }
 
     public List<Reserva> listarPorSala(Long salaId){
-        return reservaRepository.findBydSalaIdOrderByInicioAsc(salaId);
+        return reservaRepository.findBydSalaIdOrderByInicioReservaAsc(salaId);
     }
 
     public void deletar(Long id){
