@@ -1,0 +1,67 @@
+package com.deloitte.room.services;
+
+import com.deloitte.room.DTO.ReservaDTO;
+import com.deloitte.room.models.Reserva;
+import com.deloitte.room.models.Sala;
+import com.deloitte.room.repositories.ReservaRepository;
+import com.deloitte.room.repositories.SalaRepository;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Service
+public class ReservaService {
+    @Autowired
+    private ReservaRepository reservaRepository;
+    @Autowired
+    private SalaRepository salaRepository;
+
+    public Reserva criarReserva(ReservaDTO dto){
+        if(dto.getInicioReserva().isBefore(LocalDateTime.now())) {
+            throw new IllegalArgumentException("Não é possível reservar datas passadas");
+        }
+
+        if (!dto.getInicioReserva().isBefore(dto.getFimReserva())){
+            throw new IllegalArgumentException("Data de início deve ser anterior à data de fim.");
+        }
+
+        List<Reserva> conflitos = reservaRepository
+                .findBySalaIdAndInicioLessThanEqualAndFimGreaterThanEqual(dto.getSalaId(), dto.getFimReserva(),dto.getInicioReserva());
+
+        if (!conflitos.isEmpty()){
+            throw new IllegalArgumentException("Já existe uma reserva nesse horário");
+        }
+
+        Sala sala = salaRepository.findById(dto.getSalaId())
+                .orElseThrow(()-> new EntityNotFoundException("Sala não encontrada"));
+
+        Reserva reserva = new Reserva();
+        reserva.setSala(sala);
+        reserva.setNomeResponsavel(dto.getNomeResponsavel());
+        reserva.setInicioReserva(dto.getInicioReserva());
+        reserva.setFimReserva(dto.getFimReserva());
+
+        return reservaRepository.save(reserva);
+    }
+
+    public Reserva buscarPorId(Long id){
+        return reservaRepository.findById(id)
+                .orElseThrow(()-> new EntityNotFoundException("Reserva não encontrada."));
+    }
+
+    public List<Reserva> listarFuturas(){
+        return reservaRepository.findByInicioAfterOrderByInicioAsc(LocalDateTime.now());
+    }
+
+    public List<Reserva> listarPorSala(Long salaId){
+        return reservaRepository.findBydSalaIdOrderByInicioAsc(salaId);
+    }
+
+    public void deletar(Long id){
+        Reserva reserva = buscarPorId(id);
+        reservaRepository.delete(reserva);
+    }
+}
