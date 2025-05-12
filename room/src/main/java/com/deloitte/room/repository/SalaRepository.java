@@ -1,6 +1,6 @@
-package com.deloitte.room.repositories;
+package com.deloitte.room.repository;
 
-import com.deloitte.room.models.Sala;
+import com.deloitte.room.model.Sala;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface SalaRepository extends JpaRepository<Sala,Long> {

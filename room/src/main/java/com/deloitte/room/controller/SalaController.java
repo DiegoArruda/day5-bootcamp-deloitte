@@ -1,12 +1,11 @@
-package com.deloitte.room.controllers;
+package com.deloitte.room.controller;
 
-import com.deloitte.room.DTO.SalaDTO;
-import com.deloitte.room.models.Sala;
-import com.deloitte.room.services.SalaService;
+import com.deloitte.room.controller.dto.SalaDTO;
+import com.deloitte.room.model.Sala;
+import com.deloitte.room.service.SalaService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

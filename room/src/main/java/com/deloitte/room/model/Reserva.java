@@ -1,4 +1,4 @@
-package com.deloitte.room.models;
+package com.deloitte.room.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;

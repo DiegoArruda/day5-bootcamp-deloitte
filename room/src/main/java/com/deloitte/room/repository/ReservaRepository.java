@@ -1,6 +1,6 @@
-package com.deloitte.room.repositories;
+package com.deloitte.room.repository;
 
-import com.deloitte.room.models.Reserva;
+import com.deloitte.room.model.Reserva;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDateTime;

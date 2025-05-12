@@ -1,10 +1,10 @@
-package com.deloitte.room.services;
+package com.deloitte.room.service;
 
-import com.deloitte.room.DTO.ReservaDTO;
-import com.deloitte.room.models.Reserva;
-import com.deloitte.room.models.Sala;
-import com.deloitte.room.repositories.ReservaRepository;
-import com.deloitte.room.repositories.SalaRepository;
+import com.deloitte.room.controller.dto.ReservaDTO;
+import com.deloitte.room.model.Reserva;
+import com.deloitte.room.model.Sala;
+import com.deloitte.room.repository.ReservaRepository;
+import com.deloitte.room.repository.SalaRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
