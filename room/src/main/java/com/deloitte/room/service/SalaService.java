@@ -6,6 +6,7 @@ import com.deloitte.room.repository.SalaRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -14,39 +15,34 @@ public class SalaService {
     @Autowired
    private SalaRepository salaRepository;
 
-    public Sala criar(SalaDTO dto){
-        if(salaRepository.existsByNome(dto.getNome())){
+    public Sala criar(Sala sala){
+        if(salaRepository.existsByNome(sala.getNome())){
             throw new IllegalArgumentException("Já existe uma sala com esse nome.");
         }
 
-        Sala sala = new Sala();
-        sala.setNome(dto.getNome());
-        sala.setCapacidadeMaxima(dto.getCapacidade());
-        sala.setLocalizacao(dto.getLocalizacao());
+        SalaDTO createdSala = new SalaDTO(sala.getID(), sala.getNome(), sala.getCapacidadeMaxima(), sala.getLocalizacao());
 
         return salaRepository.save(sala);
 
     }
-
+    //rever anotação
+    @Transactional(readOnly = true)
     public List<Sala> listarTodas(){
         return salaRepository.findAll();
     }
 
+    @Transactional(readOnly = true)
     public Sala buscarPorId(Long id){
         return salaRepository.findById(id)
                 .orElseThrow(()-> new EntityNotFoundException("Sala não encontrada."));
     }
 
-    public Sala atualizar(Long id, SalaDTO dto){
-        Sala sala = buscarPorId(id);
-
-        if(!sala.getNome().equals(dto.getNome()) && salaRepository.existsByNome(dto.getNome())){
+    public Sala atualizar(Long id, Sala sala){
+        if(!sala.getNome().equals(sala.getNome()) && salaRepository.existsByNome(sala.getNome())){
             throw new IllegalArgumentException("Já existe uma sala com esse nome");
         }
 
-        sala.setNome(dto.getNome());
-        sala.setCapacidadeMaxima(dto.getCapacidade());
-        sala.setLocalizacao(dto.getLocalizacao());
+        SalaDTO createdSala = new SalaDTO(sala.getID(), sala.getNome(), sala.getCapacidadeMaxima(), sala.getLocalizacao());
 
         return salaRepository.save(sala);
     }

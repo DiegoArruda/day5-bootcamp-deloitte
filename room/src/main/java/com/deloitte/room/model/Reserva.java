@@ -13,12 +13,17 @@ public class Reserva {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
+    //rever nome do atributo
     @ManyToOne
+    @JoinColumn(name = "sala_ID")
     private Sala sala;
+
     @NotBlank
     private String nomeResponsavel;
+
     @NotNull
     private LocalDateTime inicioReserva;
+
     @NotNull
     private LocalDateTime fimReserva;
 
